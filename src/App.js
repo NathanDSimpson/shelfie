@@ -1,21 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+
 import Dashboard from './Components/Dashboard/Dashboard'
 import Form from './Components/Form/Form'
 import Header from './Components/Header/Header'
 
 
 class App extends Component {
+  state = {
+    inventory: [
+      {
+      imgUrl: 'https://media.kohlsimg.com/is/image/kohls/3077002?wid=350&hei=350&op_sharpen=1',
+      name: 'Shoes',
+      price: 30,
+      id: 1
+      },{
+      imgUrl: 'https://cdn.shopify.com/s/files/1/0904/4132/products/Caps_Rainier-5-Panel_Olive_2000x_21ccfbe3-c5f3-4320-8fdf-01fd40f2f4e8.jpg?v=1533665540',
+      name: 'Hat',
+      price: 20,
+      id: 2
+      },{
+      imgUrl: 'data:image/jpeg;base64,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',
+      name: 'Socks',
+      price: 10,
+      id: 3
+      }
+    ]
+  }
+
+//   componentDidMount(){
+//     axios.get('/api/inventory').then(res => {
+//         this.setState({
+//             inventory: res.data
+//         })
+//     }).catch( err => console.log('We have a problem: ',err))
+// }
+
+  getInventory = () => {   // from the database
+
+  }
+
   render() {
+      console.log(this.state)
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <Dashboard/>
+          <Dashboard products={this.state.inventory}/>
           <Form/>
           <Header/>
-        </header>
       </div>
     );
   }

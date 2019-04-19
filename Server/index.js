@@ -16,9 +16,9 @@ massive(CONNECTION_STRING)
 app.use(express.json());
 
 app.get('/api/inventory', Controller.readAll); // for all products
-app.get('/api/inventory/:id', Controller.readSingle); // for a single product
-app.post('ENDPOINT', Controller.create); // create a product
-app.put('/api/inventory/:id', Controller.update);  // edit/update a product
+app.get('/api/inventory/:id', Controller.readOne); // for a single product
+app.post('/api/product', Controller.create); // create a product
+// app.put(`/api/inventory/:id?name=${}?price=${}?imgUrl=${}`, Controller.update);  // edit/update a product
 app.delete('/api/inventory/:id', Controller.delete); // delete a product
 
 app.listen(SERVER_PORT, () => {

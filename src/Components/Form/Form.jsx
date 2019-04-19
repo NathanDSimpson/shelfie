@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class Form extends Component {
     state = {
@@ -15,6 +16,14 @@ export default class Form extends Component {
     }
 
     postProduct = () => {   //post to the database, not the front end
+        axios.post('/api/product', {
+            name: this.state.name,
+            price: this.state.price,
+            imgUrl: this.state.imgUrl
+        })
+        .then(() => {
+            this.props.getInventory()
+        }).catch( err => console.log('We have a problem in our componentDidMount: ',err))
 
     }
 
@@ -42,7 +51,7 @@ export default class Form extends Component {
                 <input type="text" onChange={this.handleChange} name='price' placeholder='ex: 29 (do not include decimal or dollar signs)'/>
                 <div>
                     <button onClick={this.clearInputs} >Cancel</button>
-                    <button>Add To Inventory</button>
+                    <button onClick={this.postProduct} >Add To Inventory</button>
                 </div>
             </form>
         )

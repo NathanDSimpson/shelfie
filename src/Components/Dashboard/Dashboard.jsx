@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
                             key={p.id} 
                             name={p.name} 
                             price={p.price} 
-                            imgUrl={p.imgUrl}
+                            imgUrl={p.image}
                             />
                     })
                 }
